@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tambah Service</title>
+</head>
+<body>
+    <h1>Tambah Service Mobil ID {{ mobil_id }}</h1>
+    <form method="POST" onsubmit="return validateServiceForm()">
+        <label>Tanggal Service:</label><br>
+        <input type="date" name="tanggal"><br>
+
+        <label>Deskripsi:</label><br>
+        <input type="text" name="deskripsi"><br>
+
+        <label>Biaya:</label><br>
+        <input type="number" step="0.01" name="biaya"><br><br>
+
+        <button type="submit">Simpan</button>
+    </form>
+    <a href="{{ url_for('detail_mobil', id=mobil_id) }}">Kembali</a>
+
+</body>
+<script>
+    function validateServiceForm() {
+        const tanggal = document.querySelector('input[name="tanggal"]').value.trim();
+        const deskripsi = document.querySelector('input[name="deskripsi"]').value.trim();
+        const biaya = document.querySelector('input[name="biaya"]').value.trim();
+
+        if (!tanggal || !deskripsi || !biaya) {
+            alert("Semua field service harus diisi.");
+            return false;
+        }
+
+        if (isNaN(biaya) || parseFloat(biaya) <= 0) {
+            alert("Biaya harus berupa angka lebih dari 0.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+</html>

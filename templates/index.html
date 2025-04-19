@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daftar Mobil</title>
+</head>
+<body>
+    <h1>Showroom Mobil</h1>
+    <a href="{{ url_for('tambah_mobil') }}">+ Tambah Mobil</a>
+    <h1>Daftar Mobil di Showroom</h1>
+    <ul>
+        {% for mobil in mobil_list %}
+            <li>
+                <a href="{{ url_for('detail_mobil', id=mobil.id) }}">
+                    {{ mobil.id }} - {{ mobil.merk }} {{ mobil.model }} ({{ mobil.tahun }})
+                </a>
+                <form action="{{ url_for('hapus_mobil', id=mobil.id) }}" method="POST" style="display:inline;">
+                    <button type="submit">Hapus</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

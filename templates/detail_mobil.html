@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detail Mobil</title>
+</head>
+<body>
+    <h1>Detail Mobil</h1>
+    <p><strong>ID:</strong> {{ mobil.id }}</p>
+    <p><strong>Merk:</strong> {{ mobil.merk }}</p>
+    <p><strong>Model:</strong> {{ mobil.model }}</p>
+    <p><strong>Tahun:</strong> {{ mobil.tahun }}</p>
+    <p><strong>Harga Dasar:</strong> Rp {{ mobil.harga_dasar }}</p>
+
+    {% if mobil.pinjaman_bank %}
+    <p><strong>Pinjaman Bank:</strong> Rp {{ mobil.pinjaman_bank }}</p>
+    <p><strong>Suku Bunga:</strong> {{ mobil.suku_bunga }}%</p>
+    {% endif %}
+
+    {% if cicilan_bulanan %}
+    <p><strong>Cicilan Bulanan (12 bulan):</strong> Rp {{ "%.2f"|format(cicilan_bulanan) }}</p>
+    {% endif %}
+
+    {% if hpp %}
+    <p><strong>HPP (Harga Pokok Produksi):</strong> Rp {{ "%.2f"|format(hpp) }}</p>
+    {% endif %}
+
+    <h2>Riwayat Service</h2>
+    {% if services %}
+        <ul>
+        {% for service in services %}
+            <li>
+                <strong>{{ service.tanggal }}</strong> - {{ service.deskripsi }} (Rp {{ service.biaya }})
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Belum ada data service.</p>
+    {% endif %}
+
+    <p><strong>Total Biaya Service:</strong> Rp {{ total_service }}</p>
+
+    <a href="{{ url_for('tambah_service', mobil_id=mobil.id) }}">+ Tambah Service</a><br>
+    <form method="post" action="{{ url_for('hapus_mobil', id=mobil.id) }}">
+        <button type="submit" onclick="return confirm('Yakin ingin menghapus mobil ini?')">Hapus Mobil</button>
+    </form>
+
+    <p><a href="{{ url_for('index') }}">← Kembali ke Daftar Mobil</a></p>
+</body>
+</html>

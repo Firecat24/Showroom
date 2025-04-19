@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tambah Mobil</title>
+</head>
+<body>
+    <h1>Form Tambah Mobil</h1>
+    <form method="POST" onsubmit="return validateMobilForm()">
+        <label>Merk:</label><br>
+        <input type="text" name="merk"><br>
+
+        <label>Model:</label><br>
+        <input type="text" name="model"><br>
+
+        <label>Tahun:</label><br>
+        <input type="number" name="tahun"><br>
+
+        <label>Harga Dasar:</label><br>
+        <input type="number" step="0.01" name="harga_dasar"><br>
+
+        <label>Pinjaman Bank (opsional):</label><br>
+        <input type="number" step="0.01" name="pinjaman_bank"><br>
+
+        <label>Suku Bunga (% per tahun, opsional):</label><br>
+        <input type="number" step="0.01" name="suku_bunga"><br><br>
+
+        <button type="submit">Simpan</button>
+    </form>
+    <a href="{{ url_for('index') }}">Kembali</a>
+
+</body>
+<script>
+    function validateMobilForm() {
+        const merk = document.querySelector('input[name="merk"]').value.trim();
+        const model = document.querySelector('input[name="model"]').value.trim();
+        const tahun = document.querySelector('input[name="tahun"]').value.trim();
+        const harga_dasar = document.querySelector('input[name="harga_dasar"]').value.trim();
+
+        if (!merk || !model || !tahun || !harga_dasar) {
+            alert("Field Merk, Model, Tahun, dan Harga Dasar harus diisi.");
+            return false;
+        }
+
+        if (isNaN(tahun) || parseInt(tahun) < 1900) {
+            alert("Tahun harus berupa angka yang valid.");
+            return false;
+        }
+
+        if (isNaN(harga_dasar) || parseFloat(harga_dasar) <= 0) {
+            alert("Harga Dasar harus berupa angka lebih dari 0.");
+            return false;
+        }
+
+        const pinjaman = document.querySelector('input[name="pinjaman_bank"]').value.trim();
+        const bunga = document.querySelector('input[name="suku_bunga"]').value.trim();
+
+        if ((pinjaman && !bunga) || (!pinjaman && bunga)) {
+            alert("Isi kedua field Pinjaman Bank dan Suku Bunga, atau kosongkan keduanya.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+</html>
